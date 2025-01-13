@@ -66,3 +66,4 @@ notion_api_docs/
 examples/.env.integration
 .env.prod
 .env.integration
+examples/
