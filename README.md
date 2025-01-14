@@ -127,32 +127,6 @@ Note: Even if you have a .env file configured, you must add these environment va
 - [Dependencies](docs/dependencies.md) - Project dependencies and version information
 - [Changelog](docs/CHANGELOG.md) - Development progress and updates
 
-## Project Structure
-
-```
-notion-api-mcp/
-├── src/
-│   └── notion_api_mcp/
-│       ├── __init__.py
-│       ├── server.py           # Main MCP server
-│       ├── api/               # API interaction modules
-│       │   ├── __init__.py
-│       │   ├── blocks.py     # Block operations
-│       │   ├── databases.py  # Database operations
-│       │   └── pages.py      # Page operations
-│       ├── models/           # Data models
-│       │   ├── __init__.py
-│       │   ├── properties.py # Property definitions
-│       │   └── responses.py  # API responses
-│       └── utils/            # Utilities
-│           ├── __init__.py
-│           ├── auth.py       # Authentication
-│           └── formatting.py # Text formatting
-├── tests/                    # Test directory
-├── docs/                     # Documentation
-└── examples/                 # Example scripts
-```
-
 ## Development
 
 The server uses modern Python async features throughout:
