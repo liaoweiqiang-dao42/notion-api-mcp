@@ -1,6 +1,37 @@
 # Notion API MCP
 
-A Model Context Protocol (MCP) server that provides advanced todo list management and content organization capabilities through Notion's API.
+A Model Context Protocol (MCP) server that provides advanced todo list management and content organization capabilities through Notion's API. MCP enables AI models to interact with external tools and services, allowing seamless integration with Notion's powerful features.
+
+## MCP Overview
+
+Python-based MCP server that enables AI models to interact with Notion's API, providing:
+- **Todo Management**: Create, update, and track tasks with rich text, due dates, priorities, and nested subtasks
+- **Database Operations**: Create and manage Notion databases with custom properties, filters, and views
+- **Content Organization**: Structure and format content with Markdown support, hierarchical lists, and block operations
+- **Real-time Integration**: Direct interaction with Notion's workspace, pages, and databases through clean async implementation
+
+[Full feature list →](docs/features.md)
+
+## Quick Start
+
+```bash
+# Clone and setup
+git clone https://github.com/yourusername/notion-api-mcp.git
+cd notion-api-mcp
+uv venv && source .venv/bin/activate
+
+# Install and configure
+uv pip install -e .
+cp .env.integration.template .env
+
+# Add your Notion credentials to .env:
+# NOTION_API_KEY=ntn_your_integration_token_here
+# NOTION_PARENT_PAGE_ID=your_page_id_here  # For new databases
+# NOTION_DATABASE_ID=your_database_id_here  # For existing databases
+
+# Run the server
+python -m notion_api_mcp
+```
 
 ## Getting Started
 
@@ -86,133 +117,15 @@ Add to Claude Desktop's config (`~/Library/Application Support/Claude/claude_des
 
 Note: Even if you have a .env file configured, you must add these environment variables to the Claude Desktop config for Claude to use the MCP. The .env file is primarily for local development and testing.
 
-## Configuration Details
-
-### Environment Variables
-
-The server supports configuration through both a .env file and system environment variables. When both are present, system environment variables (including those set in the Claude Desktop MCP config) take precedence over .env file values.
-
-Required:
-- `NOTION_API_KEY`: Your Notion API integration token
-  - Must start with "ntn_"
-  - Get from https://www.notion.so/my-integrations
-
-Optional (at least one is required):
-- `NOTION_PARENT_PAGE_ID`: ID of a Notion page where you want to create new databases
-  - Must be a page that has granted access to your integration
-  - Required if you want to create new databases
-  - Get from the page's URL
-
-- `NOTION_DATABASE_ID`: ID of an existing database
-  - Must be a database that has granted access to your integration
-  - Required if you want to work with an existing database
-  - Get from the database's URL
-
-### Configuration Sources
-
-You can provide these variables in two ways:
-
-1. Environment File (.env):
-```env
-NOTION_API_KEY=ntn_your_integration_token_here
-NOTION_PARENT_PAGE_ID=your_page_id_here
-NOTION_DATABASE_ID=your_database_id_here
-```
-
-2. Claude Desktop MCP Config:
-```json
-{
-  "mcpServers": {
-    "notion-api": {
-      "command": "/path/to/your/.venv/bin/python",
-      "args": ["-m", "notion_api_mcp"],
-      "env": {
-        "NOTION_API_KEY": "ntn_your_integration_token_here",
-        "NOTION_PARENT_PAGE_ID": "your_page_id_here",
-        "NOTION_DATABASE_ID": "your_database_id_here"
-      }
-    }
-  }
-}
-```
-
-The server will:
-1. First load any values from your .env file
-2. Then apply any system environment variables (including those from MCP config)
-3. System environment variables take precedence over .env values
-
-This means you can:
-- Use .env for local development and testing
-- Override values via MCP config for production use
-- Mix and match sources (e.g., some values in .env, others in MCP config)
-
 ## Documentation
 
+- [Configuration Details](docs/configuration.md) - Detailed configuration options and environment variables
+- [Features](docs/features.md) - Complete feature list and capabilities
 - [Architecture](docs/ARCHITECTURE.md) - Overview of available tools and usage examples
 - [API Reference](docs/api_reference.md) - Detailed API endpoints and implementation details
 - [Test Coverage Matrix](docs/test_coverage_matrix.md) - Test coverage and validation status
 - [Dependencies](docs/dependencies.md) - Project dependencies and version information
 - [Changelog](docs/CHANGELOG.md) - Development progress and updates
-
-## Features
-
-### Core Functionality
-- Clean async implementation using httpx
-- Type-safe configuration using Pydantic
-- Simple configuration via environment variables
-- Comprehensive error handling
-- Resource cleanup and connection management
-
-### Database Operations
-
-The create_database tool allows you to create new databases in Notion. Important notes:
-- The parent must be a Notion page that has granted access to your integration
-- Currently, databases can only be created as children of Notion pages or wiki databases (Notion API limitation)
-- Once created, databases cannot be moved to a different parent
-
-Example database creation:
-```python
-{
-  "parent_page_id": "your_page_id",
-  "title": "My Tasks",
-  "properties": {
-    "Name": {"title": {}},
-    "Status": {
-      "select": {
-        "options": [
-          {"name": "Not Started", "color": "red"},
-          {"name": "In Progress", "color": "yellow"},
-          {"name": "Done", "color": "green"}
-        ]
-      }
-    }
-  }
-}
-```
-
-Other database features:
-- Dynamic property types including select, multi-select, date, number, formula
-- Advanced filtering with multiple conditions (AND/OR logic)
-- Rich sorting options combining multiple properties
-- Smart pagination for efficient data access
-- Powerful search across all content
-
-### Todo Management
-- Rich text descriptions with full Markdown and inline code support
-- Flexible due dates with timezone-aware scheduling and reminders
-- Customizable priority levels (high/medium/low) with visual indicators
-- Dynamic status tracking (Not Started, In Progress, Completed, etc.)
-- Hierarchical categories and multiple tags for powerful organization
-- Collaborative task notes and threaded comments
-- Nested subtasks with independent progress tracking
-- Database templates for recurring task patterns (Note: Template blocks deprecated as of March 27, 2023)
-
-### Content Management
-- Rich text formatting with support for headings, quotes, callouts, and code blocks
-- Structured block operations for content organization
-- Smart link previews and embeds
-- Hierarchical list management
-- Advanced block features including synced blocks and database views
 
 ## Project Structure
 
