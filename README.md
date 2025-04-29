@@ -1,5 +1,7 @@
 # Notion API MCP
 
+[![smithery badge](https://smithery.ai/badge/@liaoweiqiang-dao42/notion-api-mcp)](https://smithery.ai/server/@liaoweiqiang-dao42/notion-api-mcp)
+
 A Model Context Protocol (MCP) server that provides advanced todo list management and content organization capabilities through Notion's API. MCP enables AI models to interact with external tools and services, allowing seamless integration with Notion's powerful features.
 
 ## MCP Overview
@@ -13,6 +15,16 @@ Python-based MCP server that enables AI models to interact with Notion's API, pr
 [Full feature list →](docs/features.md)
 
 ## Quick Start
+
+### Installing via Smithery
+
+To install notion-api-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@liaoweiqiang-dao42/notion-api-mcp):
+
+```bash
+npx -y @smithery/cli install @liaoweiqiang-dao42/notion-api-mcp --client claude
+```
+
+### Installing manually
 
 ```bash
 # Clone and setup
